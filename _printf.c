@@ -29,27 +29,21 @@ int _printf(const char *format, ...)
 			if (*format == '\0')
 				break;
 			if (*format == '%')
-			{
-				write(1, format, 1);
+			{ write(1, format, 1);
 				joval_s++;
-			}
-			else if (*format == 'c')
-			{
-				char c = va_arg(args_in_list, int);
+			} else if (*format == 'c')
+			{ char c = va_arg(args_in_list, int);
 
 				write(1, &c, 1);
 				joval_s++;
-			}
-			else if (*format == 's')
-			{
-				char *str = va_arg(args_in_list, char*);
+			} else if (*format == 's')
+			{ char *str = va_arg(args_in_list, char*);
 				int len_str = 0;
 
 				while (str[len_str] != '\0')
 					len_str++;
 				write(1, str, len_str);
-				joval_s += len_str;
-			}
+				joval_s += len_str; }
 		}
 		format++;
 	}

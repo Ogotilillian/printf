@@ -1,3 +1,4 @@
+#include "main.h"
 /**
  * _printf-the main function that emitates the standard output printf.
  * *format: Contains the character to be checked
@@ -14,16 +15,16 @@ va_start(args_in_list, format);
 while (*format)
 {
 if (*format != '%')
-		write(1, format, 1);
-joval_s++;
+{		write(1, format, 1);
+joval_s++;}
 else
 {
 		format++;
 	    if (*format == '\0')
 break;
-	    if (*format == '%')
+	    if (*format == '%'){
 write(1, format, 1);
-joval_s++;
+joval_s++;}
 	else if (*format == 'c')
 	{
 		char c = va_arg(args_in_list, int);

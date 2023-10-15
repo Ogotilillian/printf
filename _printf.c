@@ -10,43 +10,52 @@
  */
 int _printf(const char *format, ...)
 {
+	int buf, j = 0, k = 0;
 	int joval_s = 0;
 	va_list args_in_list;
-
+	 char buff[BUFSIZ];
 	if (format == NULL)
 		return (-1);
 	va_start(args_in_list, format);
-	while (*format)
+	while (format && format[j] != '%')
 	{
-		if (*format != '%')
+		j++;
+		if (format != '%')
 		{
-			write(1, format, 1);
+			buff[buf++] = format[j];
+			if (buf == BUFSIZ)
+				prin_buff(buff, &buf);
+			/*write(1, format, 1);*/
 			joval_s++;
 		}
 		else
 		{
-			format++;
-			if (*format == '\0')
-				break;
-			if (*format == '%')
-			{ write(1, format, 1);
-				joval_s++;
-			} else if (*format == 'c')
-			{ char c = va_arg(args_in_list, int);
-
-				write(1, &c, 1);
-				joval_s++;
-			} else if (*format == 's')
-			{ char *str = va_arg(args_in_list, char*);
-				int len_str = 0;
-
-				while (str[len_str] != '\0')
-					len_str++;
-				write(1, str, len_str);
-				joval_s += len_str; }
+		prin_buff(buff, &buf);
+		lags = flags(format, &j);
+		width = findwidth(format, &j, args_in_list);
+			get_precision = precision(format, &j, args_in_list);
+			size = get_size(format, &j);
+			++j;
+			k = handle_print(format, &j, list, buff, lags, width, get_precision, size);
+			if (k == -1)
+				return (-1);
+			joval_s += k;
 		}
-		format++;
 	}
-	va_end(args_in_list);
-	return (joval_s);
+prin_buff(buff, &buf);
+va_end(list);
+return (joval_s);
+}
+/**
+ * prin_buff-This is the function that handles BUFSIZ.
+ * @buff: Array of chars
+ * @buf: index at which we add the following character and also
+ * also represents the length.
+ * Return: void.
+ */
+void prin_buff(char buff, int *buf)
+{
+	if (*buf > 0)
+		write(1, &buff[0], *buf);
+	*buf = 0;
 }

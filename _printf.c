@@ -37,7 +37,8 @@ int _printf(const char *format, ...)
 			get_precision = precision(format, &j, args_in_list);
 			custom_size = custom_size(format, &j);
 			++j;
-			k = handle_print(format, &j, args_in_list, buff, custom_lags, width, custom_precision, custom_size);
+			k = handle_print(format, &j, args_in_list, buff, custom_lags, width,
+					custom_precision, custom_size);
 			if (k == -1)
 				return (-1);
 			joval_s += k;

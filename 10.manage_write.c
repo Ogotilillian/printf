@@ -55,51 +55,51 @@ int handle_write_char(char c, char buff[],
  * Return: Number of characters printed.
  */
 int write_number(int is_neg, int index, char buff[],
-    int flags, int width, int precision, int size)
+    int custom_lags, int width, int get_precision, int custom_size)
 {
-    int length = BUFF_SIZE - ind - 1;
+    int length = BUF_SIZ - index - 1;
     char padd = ' ', extra_ch = 0;
 
-    if ((flags & F_ZERO) && !(flags & F_MINUS))
+    if ((custom_lags & F_ZERO) && !(custom_lags & F_MINUS))
         padd = '0';
 
-    if (is_negative)
+    if (is_neg)
         extra_ch = '-';
-    else if (flags & F_PLUS)
+    else if (custom_lags & F_PLUS)
         extra_ch = '+';
-    else if (flags & F_SPACE)
+    else if (custom_lags & F_SPACE)
         extra_ch = ' ';
 
-    return (write_num(ind, buffer, flags, width, precision,
+    return (write_num(index, buff, custom_lags, width, get_precision,
         length, padd, extra_ch));
 }
 
 /**
  * write_num - Writes a number using a buffer
- * @ind: Index at which the number starts in the buffer
- * @buffer: Buffer array to handle print
- * @flags: Calculates active flags
+ * @index: Index at which the number starts in the buffer
+ * @buff: Buffer array to handle print
+ * @custom_lags: Calculates active flags
  * @width: Get width
- * @precision: Precision specifier
+ * @get_precision: Precision specifier
  * @length: Number length
  * @padd: Padding character
  * @extra_c: Extra character
  *
  * Return: Number of characters printed.
  */
-int write_num(int ind, char buffer[], int flags, int width, int precision, int length, char padd, char extra_c)
+int write_num(int index, char buff[], int custom_lags, int width, int get_precision, int length, char padd, char extra_c)
 {
     int i, padd_start = 1;
 
-    if (precision == 0 && ind == BUFF_SIZE - 2 && buffer[ind] == '0')
+    if (get_precision == 0 && index == BUF_SIZ - 2 && buff[index] == '0')
         return (0);
 
-    if (precision > 0 && precision < length)
+    if (get_precision > 0 && get_precision < length)
         padd = ' ';
 
-    while (precision > length)
+    while (get_precision > length)
     {
-        buffer[--ind] = '0';
+        buff[--ind] = '0';
         length++;
     }
 

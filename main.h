@@ -80,7 +80,7 @@ int get_precision(const char *format, int *i, va_list args_in_list);
 int get_size(const char *format, int *i);
 
 /* Function to print a string in reverse */
-int print_reverse(va_list types, char buffer[],
+int print_reverse(va_list args_in_list, char buffer[],
     int flags, int width, int precision, int size);
 
 /* Function to print a string in ROT13 */

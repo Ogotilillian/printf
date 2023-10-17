@@ -12,49 +12,49 @@
  *
  * Return: Number of characters printed.
  */
-int handle_write_char(char c, char buffer[],
-    int flags, int width, int precision, int size)
+int handle_write_char(char c, char buff[],
+    int custom_lags, int width, int get_precision, int custom_size)
 {
     int i = 0;
     char padd = ' ';
 
-    if (flags & F_ZERO)
+    if (custom_lags & F_ZERO)
         padd = '0';
 
-    buffer[i++] = c;
-    buffer[i] = '\0';
+    buff[i++] = c;
+    buff[i] = '\0';
 
     if (width > 1)
     {
-        buffer[BUFF_SIZE - 1] = '\0';
+        buff[BUF_SIZ - 1] = '\0';
         for (i = 0; i < width - 1; i++)
-            buffer[BUFF_SIZE - i - 2] = padd;
+            buffer[BUF_SIZ - i - 2] = padd;
 
-        if (flags & F_MINUS)
-            return (write(1, &buffer[0], 1) +
-                    write(1, &buffer[BUFF_SIZE - i - 1], width - 1));
+        if (custom_lags & F_MINUS)
+            return (write(1, &buff[0], 1) +
+                    write(1, &buff[BUF_SIZ - i - 1], width - 1));
         else
-            return (write(1, &buffer[BUFF_SIZE - i - 1], width - 1) +
-                    write(1, &buffer[0], 1));
+            return (write(1, &buff[BUF_SIZ - i - 1], width - 1) +
+                    write(1, &buff[0], 1));
     }
 
-    return (write(1, &buffer[0], 1));
+    return (write(1, &buff[0], 1));
 }
 
-/************************* WRITE NUMBER *************************/
+
 /**
  * write_number - Prints a number
- * @is_negative: 1 if the number is negative, 0 if not
- * @ind: Index at which the number starts in the buffer
- * @buffer: Buffer array to handle print
- * @flags: Calculates active flags
+ * @is_neg: 1 if the number is negative, 0 if not
+ * @index: Index at which the number starts in the buffer
+ * @buff: Buffer array to handle print
+ * @custom_lags: Calculates active flags
  * @width: Get width
- * @precision: Precision specifier
- * @size: Size specifier
+ * @get_precision: Precision specifier
+ * @custom_size: Size specifier
  *
  * Return: Number of characters printed.
  */
-int write_number(int is_negative, int ind, char buffer[],
+int write_number(int is_neg, int index, char buff[],
     int flags, int width, int precision, int size)
 {
     int length = BUFF_SIZE - ind - 1;

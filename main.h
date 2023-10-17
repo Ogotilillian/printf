@@ -18,7 +18,9 @@
  * @formatt: The format to managed
  * @fn: The function associated herae.
  */
-struct formatt { char formatt;
+struct formatt
+{
+char formatt;
 int (*fn)(va_list, char[], int, int, int, int);
 };
 typedef struct formatt fmt_t;

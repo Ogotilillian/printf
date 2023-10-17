@@ -80,22 +80,22 @@ int get_precision(const char *format, int *i, va_list args_in_list);
 int get_size(const char *format, int *i);
 
 /* Function to print a string in reverse */
-int print_reverse(va_list args_in_list, char buffer[],
-    int flags, int width, int precision, int size);
+int print_reverse(va_list args_in_list, char buff[],
+    int custom_lags, int width, int get_precision, int custom_size);
 
 /* Function to print a string in ROT13 */
-int print_rot13string(va_list types, char buffer[],
-    int flags, int width, int precision, int size);
+int print_rot13string(va_list args_in_list, char buff[],
+    int custom_lags, int width, int get_precision, int custom_size);
 
 /* Width handler */
-int handle_write_char(char c, char buffer[],
-    int flags, int width, int precision, int size);
-int write_number(int is_positive, int ind, char buffer[],
-    int flags, int width, int precision, int size);
-int write_num(int ind, char bff[], int flags, int width, int precision,
+int handle_write_char(char c, char buff[],
+    int custom_lags, int width, int get_precision, int custom_size);
+int write_number(int is_positive, int index, char buff[],
+    int custom_lags, int width, int get_precision, int custom_size);
+int write_num(int index, char buff[], int custom_lags, int width, int get_precision,
     int length, char padd, char extra_c);
-int write_pointer(char buffer[], int ind, int length,
-    int width, int flags, char padd, char extra_c, int padd_start);
+int write_pointer(char buff[], int index, int length,
+    int width, int custom_lags, char padd, char extra_c, int padd_start);
 
 int write_unsgnd(int is_neg, int index,
     char buff[], int custom_lags, int width,

@@ -10,10 +10,11 @@
  */
 int _printf(const char *format, ...)
 {
-	int buf, j = 0, k = 0;
-	int joval_s = 0;
+	int buf, j = 0, k = 0, get_precision, custom_size;
+	int joval_s = 0, custom_lags, width;
 	va_list args_in_list;
-	 char buff[BUFSIZ];
+	 char buff[BUF_SIZ];
+
 	if (format == NULL)
 		return (-1);
 	va_start(args_in_list, format);
@@ -23,7 +24,7 @@ int _printf(const char *format, ...)
 		if (format != '%')
 		{
 			buff[buf++] = format[j];
-			if (buf == BUFSIZ)
+			if (buf == BUF_SIZ)
 				prin_buff(buff, &buf);
 			/*write(1, format, 1);*/
 			joval_s++;
@@ -31,19 +32,19 @@ int _printf(const char *format, ...)
 		else
 		{
 		prin_buff(buff, &buf);
-		lags = flags(format, &j);
-		width = findwidth(format, &j, args_in_list);
+		custom_lags = custom_lags(format, &j);
+		width = _width(format, &j, args_in_list);
 			get_precision = precision(format, &j, args_in_list);
-			size = get_size(format, &j);
+			custom_size = custom_size(format, &j);
 			++j;
-			k = handle_print(format, &j, list, buff, lags, width, get_precision, size);
+			k = handle_print(format, &j, args_in_list, buff, custom_lags, width, custom_precision, custom_size);
 			if (k == -1)
 				return (-1);
 			joval_s += k;
 		}
 	}
 prin_buff(buff, &buf);
-va_end(list);
+va_end(args_in_list);
 return (joval_s);
 }
 /**
